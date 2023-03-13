@@ -42,18 +42,14 @@ contract DogCoin {
     // We need the senders address in order to substract their balance when transfering token
     // In addition after emit we want to have a payment history for each users address
     function transferToken(uint _amount, address _recipient) public {
-        require(balances[msg.sender] >= _amount);
-        balances[_recipient] += _amount;
+    // require is not necessary since 0.8 has over/underflow checks builtin
+    //  require(balances[msg.sender] >= _amount);
         balances[msg.sender] -= _amount;
+        balances[_recipient] += _amount;
 
         emit tokenTransfered(_amount,_recipient);
 
-        Payment memory pushPaymentHistory;
-
-        pushPaymentHistory.recipientAddr = _recipient;
-        pushPaymentHistory.transferAmount = _amount;
-
-        paymentHistory[msg.sender].push(pushPaymentHistory);
+        paymentHistory[msg.sender].push(Payment(_recipient, _amount));
     }
 
 }
