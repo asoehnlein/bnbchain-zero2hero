@@ -18,35 +18,20 @@ describe("BadgerCoin", function () {
     return { badgerCoin, owner, otherAccount };
   }
 
-  it("Should return the initial supply", async function () {
+  it("Should return the initial supply of 1000000 and 18 decimals", async function () {
 
     const { badgerCoin } = await loadFixture(deployBadgerCoinFixture);
 
-    const initialSupply = (1000000 * (10 ** 18)).toString();
+    // const initialSupply = (1000000 * (10 ** 18)).toBigNumber();
+    const initialSupply = ethers.utils.parseEther("1000000");
+    const initialSupplyUnits = ethers.utils.parseUnits("1000000",18);
 
     // expect(await badgerCoin.totalSupply()).to.equal(initialSupply);
 
     console.log("\nLog:",initialSupply,"\n")
 
-    expect(await badgerCoin.totalSupply()).to.equal("1000000000000000000000000");
+    expect(await badgerCoin.totalSupply()).to.equal(initialSupplyUnits);
   });
-
-/*   it("Should return 18 decimals", async function () {
-
-    // Contracts are deployed using the first signer/account by default
-    const [owner, otherAccount] = await ethers.getSigners();
-
-    const BadgerCoin = await ethers.getContractFactory("BadgerCoin");
-    const badgerCoin = await BadgerCoin.deploy();
-
-    const initialSupply = (1000000 * (10 ** 18)).toString();
-
-    // expect(await badgerCoin.totalSupply()).to.equal(initialSupply);
-
-    console.log("\nLog:",initialSupply,"\n")
-
-    expect(await badgerCoin.totalSupply()).to.equal("1000000000000000000000000");
-  }); */
 
   it("Should show balanceOf address is correct", async function () {
 
@@ -68,7 +53,7 @@ describe("BadgerCoin", function () {
   });
 
   it("Should revert on transfer amount insufficient balance", async function () {
-
+å
     const { badgerCoin, otherAccount } = await loadFixture(deployBadgerCoinFixture);
 
     await expect(badgerCoin.transfer(otherAccount.address,"1000000000000000000000001")).to.be.revertedWith("ERC20: transfer amount exceeds balance");
