@@ -1,8 +1,9 @@
 /** @type import('hardhat/config').HardhatUserConfig */
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 require("hardhat-gas-reporter");
 
-const { privateKey } = require('./secrets.json');
+const { privateKey, apiKey } = require('./secrets.json');
 
 module.exports = {
   solidity: {
@@ -33,6 +34,11 @@ module.exports = {
       chainId: 56,
       gasPrice: 20000000000,
       accounts: [privateKey]
+    }
+  },
+  etherscan: {
+    apiKey: {
+      bscTestnet: apiKey,
     }
   },
   paths: {
