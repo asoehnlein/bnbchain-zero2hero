@@ -1,9 +1,22 @@
 /** @type import('hardhat/config').HardhatUserConfig */
 require("@nomiclabs/hardhat-waffle");
+require("hardhat-gas-reporter");
 
 const { privateKey } = require('./secrets.json');
 
 module.exports = {
+  solidity: {
+    version: "0.8.19",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 1
+      }
+    }
+  },
+  gasReporter: {
+    currency: "USD",
+  },
   defaultNetwork: "hardhat",
   networks: {
     localhost: {
@@ -22,7 +35,6 @@ module.exports = {
       accounts: [privateKey]
     }
   },
-  solidity: "0.8.19",
   paths: {
     sources: "./contracts",
     tests: "./test",
